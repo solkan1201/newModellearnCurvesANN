@@ -54,12 +54,26 @@ primeiro = dimension_j - 1 - n_outputs
 for ii in range(0, n_outputs - 1):
     net[ dimension_i - 1, primeiro + ii] = out_ - net[primeiro + 1, 0] 
 
+# calculando delta para as saidas das neuronas
 for jj in range(n_inputs + 1, dimension_j - 2, -1):
+    
     for ii in range(1, dimension_j - 2 - n_outputs):
         if ii == jj:
             break
         elif net[ii, jj] != 0:
             net[dimension_i - 1, ii] = net[ dimension_i - 1, ii] + net[ii, jj] * net[dimension_i - 1 , jj]
 
+# Ajuste de pesos 
+for jj in range(n_outputs + 1, dimension_j - 2, -1):
 
+    for ii in range(1, dimension_i - 2 - n_outputs):
+
+        if ii != jj:
+            break
+        elif net[ii, jj] != 0:
+            net[ii, jj] = net[ii, jj] + 0.45 * net[dimension_i - 1, jj]
+            * net[jj, dimension_j - 1] * net[ii, 0]
+
+
+# return net
  
